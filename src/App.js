@@ -25,7 +25,6 @@ function App() {
         const url = 'https://jsonplaceholder.typicode.com/posts'
         const fetchApi = async () => {
             const res = await axios.get(url)
-            console.log(res.data)
             setPosts(res.data)
         }
         fetchApi()
@@ -34,7 +33,7 @@ function App() {
 
 
   return (
-    <Context.Provider value={{setPostData, postData}}>
+    <Context.Provider value={{setPostData, postData, setPosts}}>
     <Router>
       <Route>
         <Header />

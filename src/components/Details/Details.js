@@ -7,7 +7,6 @@ const Details = () => {
 
     
     const dataArray = Object.entries(postData)
-    console.log(dataArray)
     return (
         <ul>
             {dataArray.map(post => <h1 className='post-data' key={post[0][0]}>{post[0]} : {post[1]}</h1>)}

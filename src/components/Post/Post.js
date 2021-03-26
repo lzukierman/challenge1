@@ -10,35 +10,34 @@ import './Post.css'
 const Post = ({ posts, post }) => {
     // const [postData, setPostData] = useState()
 
-    const [searched, setSearched] = useState(false)
-    const {setPostData, postData} = useContext(Context)
+    const {setPostData, setPosts} = useContext(Context)
     const history = useHistory()
 
 
     const handleSearch = async () => {
         const postId = posts.filter(el => el.id === post.id)[0].id
-        setSearched(true)
 
         const res = await axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
         const data =  res.data
         setPostData(data)
-
-
-
-        console.log(data)
         history.push('/details')
-        console.log('llego')
     }
 
 
     const handleDelete = async () => {
         const postId = posts.filter(el => el.id === post.id)[0].id
         const deletePost = await axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`)
-        console.log(deletePost)
-        alert(`borraste el post con id ${deletePost.data.id}`)
+        setPosts(posts.filter(el => el.id !== post.id))
+        alert('Post eliminado')
 
     }
 
+
+    const handleEdit = async () => {
+        const postId = posts.filter(el => el.id === post.id)[0].id
+        const res = await axios.put(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+        return res
+    }
     
     
 
@@ -57,7 +56,7 @@ const Post = ({ posts, post }) => {
                         </button>
                     </div>
                     <div className='btn-container'>
-                        <button className="edit-btn">
+                        <button onClick={handleEdit} className="edit-btn">
                             <i className="far fa-edit"></i>
                         </button>
                     </div>
