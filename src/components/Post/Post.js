@@ -11,9 +11,8 @@ const Post = ({ posts, post }) => {
     // const [postData, setPostData] = useState()
 
     const [searched, setSearched] = useState(false)
-    const setPostData = useContext(Context)
+    const {setPostData, postData} = useContext(Context)
     const history = useHistory()
-
 
 
     const handleSearch = async () => {
@@ -21,14 +20,24 @@ const Post = ({ posts, post }) => {
         setSearched(true)
 
         const res = await axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
-        const data = res.data
-        setPostData(data) //no carga la data
+        const data =  res.data
+        setPostData(data)
+
+
 
         console.log(data)
         history.push('/details')
         console.log('llego')
     }
 
+
+    const handleDelete = async () => {
+        const postId = posts.filter(el => el.id === post.id)[0].id
+        const deletePost = await axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+        console.log(deletePost)
+        alert(`borraste el post con id ${deletePost.data.id}`)
+
+    }
 
     
     
@@ -43,7 +52,7 @@ const Post = ({ posts, post }) => {
                         </button>
                     </div>
                     <div className='btn-container'>
-                        <button className="trash-btn">
+                        <button onClick={handleDelete} className="trash-btn">
                             <i className="fas fa-trash"></i>
                         </button>
                     </div>

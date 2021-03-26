@@ -34,7 +34,7 @@ function App() {
 
 
   return (
-    <Context.Provider value={postData, setPostData}>
+    <Context.Provider value={{setPostData, postData}}>
     <Router>
       <Route>
         <Header />
